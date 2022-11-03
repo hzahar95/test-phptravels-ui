@@ -15,4 +15,10 @@ public class LoginTest extends TestSetup{
         //ASSERT
         assertTrue(homePage.isCorrectlyDisplayed());
     }
+
+    @Test
+    public void invalid_login_should_pop_warning_message(){
+
+
+    }
 }

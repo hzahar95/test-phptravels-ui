@@ -7,18 +7,22 @@ import com.phptravels.pages.LoginPage;
 import com.phptravels.webdriver.WebDriverFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterMethod;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+
+import java.time.Duration;
 
 @Slf4j
 public class TestSetup {
     protected WebDriver driver;
+    public WebDriverWait wait;
     protected static String email;
     protected static String password;
 
     protected ApiClient apiClient;
     //private LocalStorage localStorage;
+
 
     @BeforeSuite
     public void globalSetup() {
@@ -31,6 +35,7 @@ public class TestSetup {
     @BeforeMethod
     public void setupWebDriver() {
         driver = getSupportedBrowser();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
     private static WebDriver getSupportedBrowser() {
@@ -47,11 +52,12 @@ public class TestSetup {
         new LoginPage(driver).get();
     }
 
-    @AfterMethod
-    public void destroyWebDriver() {
-//        if (driver != null) {
-//            localStorage.clear();
-        driver.quit();
-    }
+
+//    @AfterMethod
+//    public void destroyWebDriver() {
+////        if (driver != null) {
+////            localStorage.clear();
+//        driver.quit();
+//    }
 
 }

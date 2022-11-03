@@ -21,7 +21,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     private final PageActions pageActions;
 
-    private static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl();
+    private static final String URL = ConfigurationManager.getBrowserConfigInstance().baseUrl() + "/login";
 
     @FindBy(id = "inputEmail")
     private WebElement emailField;
@@ -47,7 +47,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
         pageActions = new PageActions(driver);
     }
 
-    public boolean isFormDisplayed() {
+    public boolean isLoginFormDisplayed() {
         return emailField.isDisplayed() && passwordField.isDisplayed() && loginButton.isDisplayed();
     }
 
@@ -94,6 +94,6 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     @Override
     protected void isLoaded() throws Error {
         assertTrue(driver.getCurrentUrl().contains("/login"));
-        assertTrue(isFormDisplayed());
+        assertTrue(isLoginFormDisplayed());
     }
 }
