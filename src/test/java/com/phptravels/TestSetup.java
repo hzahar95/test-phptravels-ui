@@ -30,9 +30,10 @@ public class TestSetup {
         CredentialsConfig credentials = ConfigurationManager.getCredentialsConfigInstance();
         email = credentials.email();
         password = credentials.password();
+        setupWebDriver();
     }
 
-    @BeforeMethod
+    //@BeforeMethod
     public void setupWebDriver() {
         driver = getSupportedBrowser();
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));

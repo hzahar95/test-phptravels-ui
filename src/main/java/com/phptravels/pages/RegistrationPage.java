@@ -111,7 +111,7 @@ public class RegistrationPage extends LoadableComponent<RegistrationPage> {
         clearAndType(cityField, userDetails.getCity());
         clearAndType(stateField, userDetails.getState());
         clearAndType(postcodeField, userDetails.getPostcode());
-        selectCountry();
+        selectCountryFromDropdown();
         pageActions.scrollElementIntoView(passwordField);
         clearAndType(passwordField, userDetails.getPassword());
         clearAndType(confirmPasswordField, userDetails.getConfirmPassword());
@@ -136,7 +136,7 @@ public class RegistrationPage extends LoadableComponent<RegistrationPage> {
         Thread.sleep(2000);
     }
 
-    public void selectCountry() {
+    public void selectCountryFromDropdown() {
         Select countryDropdown = new Select(driver.findElement(By.id("inputCountry")));
         countryDropdown.selectByVisibleText("Macedonia ");
     }

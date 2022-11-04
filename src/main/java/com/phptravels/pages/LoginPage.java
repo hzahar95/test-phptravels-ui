@@ -81,7 +81,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
         switchToFrameAndClickRecaptcha();
         //mouseHoover();
         switchToParentFrame();
-        Thread.sleep(4000);
+        Thread.sleep(10000);
         loginButton.click();
         return new HomePage(driver);
     }
