@@ -81,7 +81,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
         switchToFrameAndClickRecaptcha();
         //mouseHoover();
         switchToParentFrame();
-        Thread.sleep(4000);
+        Thread.sleep(10000);
         loginButton.click();
         return new HomePage(driver);
     }
@@ -93,7 +93,7 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue(driver.getCurrentUrl().contains("/login"));
+        assertTrue(driver.getCurrentUrl().equalsIgnoreCase(URL));
         assertTrue(isLoginFormDisplayed());
     }
 }

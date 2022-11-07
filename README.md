@@ -3,7 +3,7 @@
 ### Description
 
 The purpose of this project is to verify the UI functionality of the product.\
-(i.e. to validate the user navigation, UI workflows, to test logical functionality of each button, to validate input fields, etc.)\
+(i.e. to validate the user navigation, UI workflows, to test logical functionality of each button, to validate input fields, etc.)
 
 ***Selenium*** framework is used for this project.\
 ***Maven*** is used as a building tool.\
