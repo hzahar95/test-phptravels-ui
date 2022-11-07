@@ -1,9 +1,9 @@
 package com.phptravels;
 
 import com.phptravels.models.User;
-import com.phptravels.pages.HomePage;
 import com.phptravels.pages.LoginPage;
 import com.phptravels.pages.ProfilePage;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -31,4 +31,11 @@ public class EditUserDetailsTest extends TestSetup {
         assertTrue(profilePage.isDisplayedCorrectly());
         assertTrue(profilePage.isSuccessMessageDisplayed());
     }
+
+    @AfterTest
+    public void revert_mail_to_original_one(){
+        ProfilePage profilePage = new ProfilePage(driver).get();
+        profilePage.revertBackToOriginalMail();
+    }
+
 }

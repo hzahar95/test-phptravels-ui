@@ -47,7 +47,14 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
         pageActions.clearAndType(lastNameField, editedUserDetails.getLastName());
         saveNameButton.click();
         pageActions.scrollElementIntoView(saveEmailButton);
-        pageActions.clearAndType(emailField,"apiautomationworker@yahoo.com");
+        pageActions.clearAndType(emailField, editedUserDetails.getEmailAddress());
+        saveEmailButton.click();
+        return this;
+    }
+
+    public ProfilePage revertBackToOriginalMail() {
+        pageActions.scrollElementIntoView(saveEmailButton);
+        pageActions.clearAndType(emailField, "hristinawebautomation@outlook.com");
         saveEmailButton.click();
         return this;
     }
