@@ -3,7 +3,6 @@ package com.phptravels.pages;
 import com.phptravels.config.ConfigurationManager;
 import com.phptravels.models.User;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -92,7 +91,6 @@ public class RegistrationPage extends LoadableComponent<RegistrationPage> {
         fillFormWith(userInfo);
         Thread.sleep(10000);
         registerButton.click();
-        //wait.until(ExpectedConditions.elementToBeClickable(registerButton)).click();
         return new HomePage(driver);
     }
 
@@ -130,12 +128,6 @@ public class RegistrationPage extends LoadableComponent<RegistrationPage> {
         pageActions.scrollElementIntoView(targetElement);
     }
 
-    public void scroll(By selector) throws InterruptedException {
-        WebElement element = driver.findElement(selector);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-        Thread.sleep(2000);
-    }
-
     public void selectCountryFromDropdown() {
         Select countryDropdown = new Select(driver.findElement(By.id("inputCountry")));
         countryDropdown.selectByVisibleText("Macedonia ");
@@ -167,7 +159,7 @@ public class RegistrationPage extends LoadableComponent<RegistrationPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue(driver.getCurrentUrl().contains("/register"));
+        assertTrue(driver.getCurrentUrl().equalsIgnoreCase(URL));
         assertTrue(registrationForm.isDisplayed());
     }
 }

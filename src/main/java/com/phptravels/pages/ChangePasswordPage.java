@@ -1,6 +1,7 @@
 package com.phptravels.pages;
 
 import com.phptravels.config.ConfigurationManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -40,10 +41,6 @@ public class ChangePasswordPage extends LoadableComponent<ChangePasswordPage> {
         pageActions = new PageActions(driver);
     }
 
-    public boolean isDisplayedCorrectly() {
-        return existingPasswordField.isDisplayed() && generatePasswordButton.isDisplayed() && saveChangesButton.isDisplayed();
-    }
-
     public void setExistingPassword(String password) {
         pageActions.clearAndType(existingPasswordField, password);
     }
@@ -62,11 +59,19 @@ public class ChangePasswordPage extends LoadableComponent<ChangePasswordPage> {
     }
 
     public void manualPasswordChange(String oldPassword, String newPassword) {
-        existingPasswordField.clear();
-        existingPasswordField.sendKeys(oldPassword);
-        newPasswordField.sendKeys(newPassword);
-        confirmNewPasswordField.sendKeys(newPassword);
+        pageActions.clearAndType(existingPasswordField, oldPassword);
+        pageActions.clearAndType(newPasswordField, newPassword);
+        pageActions.clearAndType(confirmNewPasswordField, newPassword);
         saveChangesButton.click();
+    }
+
+    public boolean isDisplayedCorrectly() {
+        return existingPasswordField.isDisplayed() && generatePasswordButton.isDisplayed() && saveChangesButton.isDisplayed();
+    }
+
+    public boolean isSuccessMessageDisplayed() {
+        By alertMessageBy = By.cssSelector(".alert-success");
+        return pageActions.isSuccessMessageDisplayed(alertMessageBy);
     }
 
     @Override

@@ -33,9 +33,10 @@ public class EditUserDetailsTest extends TestSetup {
     }
 
     @AfterTest
-    public void revert_mail_to_original_one(){
+    public void revert_mail_to_original_one() {
         ProfilePage profilePage = new ProfilePage(driver).get();
-        profilePage.revertBackToOriginalMail();
+        profilePage.revertBackToOriginalMail(email);
+        assertTrue(profilePage.isSuccessMessageDisplayed());
     }
 
 }
