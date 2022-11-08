@@ -87,8 +87,8 @@ public class RegistrationPage extends LoadableComponent<RegistrationPage> {
         pageActions = new PageActions(driver);
     }
 
-    public HomePage registerAs(User userInfo) throws InterruptedException {
-        fillFormWith(userInfo);
+    public HomePage registerAs(User userDetails) throws InterruptedException {
+        fillFormWith(userDetails);
         Thread.sleep(10000);
         registerButton.click();
         return new HomePage(driver);
@@ -99,7 +99,9 @@ public class RegistrationPage extends LoadableComponent<RegistrationPage> {
         return new LoginPage(driver);
     }
 
-    private void fillFormWith(com.phptravels.models.User userDetails) throws InterruptedException {
+    private void fillFormWith(User userDetails) throws InterruptedException {
+        //User userDetails = User.generateValidUser();
+
         clearAndType(firstNameField, userDetails.getFirstName());
         clearAndType(lastNameField, userDetails.getLastName());
         clearAndType(emailField, userDetails.getEmailAddress());

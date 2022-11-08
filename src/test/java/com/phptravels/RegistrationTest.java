@@ -11,9 +11,13 @@ public class RegistrationTest extends TestSetup {
 
     @Test
     public void valid_register_should_take_to_login_page() throws InterruptedException {
-        //ACT
+        //ARRANGE
         RegistrationPage registrationPage = new RegistrationPage(driver, wait).get();
-        HomePage homePage = registrationPage.registerAs(User.generateValidUser());
+
+        //ACT
+        User userDetails = User.generateValidUser();
+        HomePage homePage = registrationPage.registerAs(userDetails);
+
         //ASSERT
         assertTrue(homePage.isCorrectlyDisplayed());
     }

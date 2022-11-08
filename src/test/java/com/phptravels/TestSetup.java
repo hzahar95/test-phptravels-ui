@@ -52,6 +52,11 @@ public class TestSetup {
     protected void navigateToAPage() {
         new LoginPage(driver).get();
     }
+    protected void loginBeforeTest() throws InterruptedException {
+        LoginPage loginPage = new LoginPage(driver).get();
+        loginPage.loginAs(email, password);
+    }
+
 
 
 //    @AfterMethod
