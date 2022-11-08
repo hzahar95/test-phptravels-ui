@@ -26,6 +26,8 @@ public enum WebDriverFactory {
         public ChromeOptions getOptions() {
             HashMap<String, Object> chromePrefs = new HashMap<>();
             chromePrefs.put("download.default_directory", DOWNLOAD_PATH);
+            chromePrefs.put("credentials_enable_service",false);
+            chromePrefs.put("autofill.profile_enabled",false);
             return new ChromeOptions()
                     .addArguments(START_MAXIMIZED)
                     .addArguments(DISABLE_INFOBARS)
@@ -51,6 +53,7 @@ public enum WebDriverFactory {
     private static final String START_MAXIMIZED = "--start-maximized";
     private static final String DISABLE_NOTIFICATIONS = "--disable-notifications";
     private static final String DISABLE_INFOBARS = "--disable-infobars";
+
     private static final String INCOGNITO = "--incognito";
     private static final String FULL_HD_MAX_WIDTH = "--width=1920";
     private static final String FULL_HD_MAX_HEIGHT = "--height=1080";
