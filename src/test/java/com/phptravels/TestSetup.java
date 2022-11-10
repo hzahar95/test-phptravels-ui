@@ -8,7 +8,7 @@ import com.phptravels.webdriver.WebDriverFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 
 import java.time.Duration;
@@ -19,10 +19,7 @@ public class TestSetup {
     public WebDriverWait wait;
     protected static String email;
     protected static String password;
-
     protected ApiClient apiClient;
-    //private LocalStorage localStorage;
-
 
     @BeforeSuite
     public void globalSetup() {
@@ -53,12 +50,16 @@ public class TestSetup {
         new LoginPage(driver).get();
     }
 
+    protected void loginBeforeTest() throws InterruptedException {
+        LoginPage loginPage = new LoginPage(driver).get();
+        loginPage.loginAs(email, password);
+    }
 
-//    @AfterMethod
-//    public void destroyWebDriver() {
-////        if (driver != null) {
-////            localStorage.clear();
-//        driver.quit();
-//    }
+    @AfterTest
+    public void destroyWebDriver() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
 }

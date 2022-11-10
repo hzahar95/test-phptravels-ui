@@ -52,9 +52,9 @@ public class ProfilePage extends LoadableComponent<ProfilePage> {
         return this;
     }
 
-    public ProfilePage revertBackToOriginalMail() {
+    public ProfilePage revertBackToOriginalMail(String originalEmail) {
         pageActions.scrollElementIntoView(saveEmailButton);
-        pageActions.clearAndType(emailField, "hristinawebautomation@outlook.com");
+        pageActions.clearAndType(emailField, originalEmail);
         saveEmailButton.click();
         return this;
     }

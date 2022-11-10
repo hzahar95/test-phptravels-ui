@@ -3,7 +3,6 @@ package com.phptravels.pages;
 import com.phptravels.config.ConfigurationManager;
 import com.phptravels.models.User;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -88,11 +87,10 @@ public class RegistrationPage extends LoadableComponent<RegistrationPage> {
         pageActions = new PageActions(driver);
     }
 
-    public HomePage registerAs(User userInfo) throws InterruptedException {
-        fillFormWith(userInfo);
+    public HomePage registerAs(User userDetails) throws InterruptedException {
+        fillFormWith(userDetails);
         Thread.sleep(10000);
         registerButton.click();
-        //wait.until(ExpectedConditions.elementToBeClickable(registerButton)).click();
         return new HomePage(driver);
     }
 
@@ -101,7 +99,9 @@ public class RegistrationPage extends LoadableComponent<RegistrationPage> {
         return new LoginPage(driver);
     }
 
-    private void fillFormWith(com.phptravels.models.User userDetails) throws InterruptedException {
+    private void fillFormWith(User userDetails) throws InterruptedException {
+        //User userDetails = User.generateValidUser();
+
         clearAndType(firstNameField, userDetails.getFirstName());
         clearAndType(lastNameField, userDetails.getLastName());
         clearAndType(emailField, userDetails.getEmailAddress());
@@ -128,12 +128,6 @@ public class RegistrationPage extends LoadableComponent<RegistrationPage> {
         Thread.sleep(3000);
         WebElement targetElement = driver.findElement(By.xpath("//li[contains(.,'Macedonia (FYROM) (Македонија)+389')]"));
         pageActions.scrollElementIntoView(targetElement);
-    }
-
-    public void scroll(By selector) throws InterruptedException {
-        WebElement element = driver.findElement(selector);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-        Thread.sleep(2000);
     }
 
     public void selectCountryFromDropdown() {
@@ -167,7 +161,7 @@ public class RegistrationPage extends LoadableComponent<RegistrationPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue(driver.getCurrentUrl().contains("/register"));
+        assertTrue(driver.getCurrentUrl().equalsIgnoreCase(URL));
         assertTrue(registrationForm.isDisplayed());
     }
 }

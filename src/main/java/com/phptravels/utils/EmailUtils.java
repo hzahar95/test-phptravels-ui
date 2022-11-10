@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 /**
  * Utility for interacting with an Email application
  */
-public class EmailUtils {
+public final class EmailUtils {
 
     private Folder folder;
 
