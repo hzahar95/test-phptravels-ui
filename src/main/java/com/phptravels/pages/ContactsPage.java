@@ -7,7 +7,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
@@ -76,20 +78,21 @@ public class ContactsPage extends LoadableComponent<ContactsPage> {
         //select checkboxes
         pageActions.scrollElementIntoView(saveChangesButton);
         saveChangesButton.click();
-        return new ContactsPage(driver,wait);
+        return new ContactsPage(driver, wait);
     }
 
-    public DeleteContactModal openDeleteContactModal(){
+    public ContactsPage openDeleteContactModal() {
         selectAddedContactFromDropdown();
         pageActions.scrollElementIntoView(deleteContactButton);
         deleteContactButton.click();
-        return new DeleteContactModal(driver,wait);
+        return this;
     }
 
-    public void deleteAddedContact() {
-        DeleteContactModal deleteContactModal = openDeleteContactModal();
-        deleteContactModal.clickConfirm();
+    public ContactsPage clickConfirm() {
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("btnCancelInviteConfirm"))).click();
+        return this;
     }
+
 
     private void fillContactFormWith(User userDetails) {
         clearAndType(firstNameField, userDetails.getFirstName());
@@ -111,7 +114,7 @@ public class ContactsPage extends LoadableComponent<ContactsPage> {
         options.get(list).click();
     }
 
-    private void selectAddedContactFromDropdown(){
+    public void selectAddedContactFromDropdown() {
         List<WebElement> options = driver.findElements(By.xpath("//select[@id='inputContactId']"));
         Random rand = new Random();
         int list = rand.nextInt(options.size());
@@ -122,6 +125,26 @@ public class ContactsPage extends LoadableComponent<ContactsPage> {
         element.clear();
         element.sendKeys(text);
     }
+
+//    public void deletedContactIsNotPresent(){
+//        WebElement select = driver.findElement(By.id("inputContactId"));
+//        WebElement option = select.getFirstSelectedOption();
+//        String selectedValueInDropDown = option.getText();
+//        Boolean found = false;
+//
+//        WebElement element = driver.findElement(By.id("..."));
+//        Select select = new Select(element);
+//        List<WebElement> allOptions = select.getOptions();
+//        for(int i=0; i<allOptions.size(); i++) {
+//            if(alloptions[i].Equals("your_option_text")) {
+//                found=true;
+//                break;
+//            }
+//        }
+//        if(found) {
+//            System.out.println("Value exists");
+//        }
+//    }
 
     public boolean isDisplayedCorrectly() {
         return goButton.isDisplayed() && firstNameField.isDisplayed() && lastNameField.isDisplayed();

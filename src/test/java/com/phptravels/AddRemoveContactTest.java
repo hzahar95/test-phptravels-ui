@@ -2,7 +2,6 @@ package com.phptravels;
 
 import com.phptravels.models.User;
 import com.phptravels.pages.ContactsPage;
-import com.phptravels.pages.DeleteContactModal;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
@@ -25,8 +24,15 @@ public class AddRemoveContactTest extends TestSetup {
 
     @Test(dependsOnMethods = "logged_user_can_add_new_contact")
     public void user_can_remove_added_contact() {
+        //ARRANGE
         ContactsPage contactsPage = new ContactsPage(driver, wait).get();
-        contactsPage.deleteAddedContact();
+
+        //ACT
+        contactsPage.openDeleteContactModal().clickConfirm();
+
+        //ASSERT
+
+
     }
 
 }
