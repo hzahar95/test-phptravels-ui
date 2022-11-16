@@ -40,7 +40,7 @@ public class EmailTest extends TestSetup{
 
             driver.get(link);
 
-            //TODO: continue testing
+            //TODO continue testing
         } catch (Exception e) {
             e.printStackTrace();
             Assert.fail(e.getMessage());

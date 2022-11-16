@@ -20,8 +20,9 @@ public class InviteNewUserTest extends TestSetup {
         assertTrue(inviteNewUserPage.isSuccessMessageDisplayed());
     }
 
+    //TODO
     @Test
-    public void user_can_cancel_the_invitation(){
+    public void user_can_cancel_the_invitation() {
 
     }
 

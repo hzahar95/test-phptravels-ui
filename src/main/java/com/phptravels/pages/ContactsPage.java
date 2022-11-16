@@ -2,6 +2,7 @@ package com.phptravels.pages;
 
 import com.phptravels.config.ConfigurationManager;
 import com.phptravels.models.User;
+import com.phptravels.utils.RandomWebElementUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -56,14 +57,26 @@ public class ContactsPage extends LoadableComponent<ContactsPage> {
     @FindBy(id = "inputPostcode")
     private WebElement zipCodeField;
 
-    @FindBy(id = "country")
-    private WebElement countryDropdown;
-
     @FindBy(xpath = "//input[@value='Save Changes']")
     private WebElement saveChangesButton;
 
     @FindBy(xpath = "//button[normalize-space()='Delete Contact']")
     private WebElement deleteContactButton;
+
+    @FindBy(id = "btnCancelInviteConfirm")
+    private WebElement confirmButton;
+
+    @FindBy(name = "contactid")
+    private WebElement contactsDropdown;
+
+    @FindBy(xpath = "//select[@id='country']")
+    private WebElement countryDropdown;
+
+    @FindBy(xpath = "//select[@id='country']//option")
+    private List<WebElement> countryOptions;
+
+    @FindBy(xpath = "(//div[@class='controls form-check'])[1]//label//input[@type='checkbox']")
+    private List<WebElement> emailPreferencesCheckboxes;
 
     public ContactsPage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
@@ -72,27 +85,40 @@ public class ContactsPage extends LoadableComponent<ContactsPage> {
         pageActions = new PageActions(driver);
     }
 
-    public ContactsPage addNewContactAs(User userDetails) {
+    public ContactsPage addNewContact(User userDetails) {
         fillContactFormWith(userDetails);
         selectRandomCountryFromDropdown();
-        //select checkboxes
         pageActions.scrollElementIntoView(saveChangesButton);
+        RandomWebElementUtils.selectCertainNumberOfRandomWebElements(2, emailPreferencesCheckboxes);
         saveChangesButton.click();
         return new ContactsPage(driver, wait);
     }
 
-    public ContactsPage openDeleteContactModal() {
-        selectAddedContactFromDropdown();
+    private void selectRandomCountryFromDropdown() {
+        clickCountryDropdown();
+        int index = new Random().nextInt(countryOptions.size());
+        WebElement randomCountry = countryOptions.get(index);
+        pageActions.scrollElementIntoView(randomCountry);
+        System.out.println(randomCountry.getAttribute("value"));
+        randomCountry.click();
+    }
+
+    private void clickCountryDropdown() {
+        wait.until(ExpectedConditions.elementToBeClickable(countryDropdown)).click();
+    }
+
+    public ContactsPage openDeleteContactModal(User userDetails) {
+        selectAddedContactFromDropdown(userDetails.getFirstName(), userDetails.getLastName(), userDetails.getEmailAddress());
+        goButton.click();
         pageActions.scrollElementIntoView(deleteContactButton);
         deleteContactButton.click();
         return this;
     }
 
     public ContactsPage clickConfirm() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.id("btnCancelInviteConfirm"))).click();
+        wait.until(ExpectedConditions.elementToBeClickable(confirmButton)).click();
         return this;
     }
-
 
     private void fillContactFormWith(User userDetails) {
         clearAndType(firstNameField, userDetails.getFirstName());
@@ -107,18 +133,9 @@ public class ContactsPage extends LoadableComponent<ContactsPage> {
         clearAndType(zipCodeField, userDetails.getPostcode());
     }
 
-    private void selectRandomCountryFromDropdown() {
-        List<WebElement> options = driver.findElements(By.xpath("//select[@id='country']"));
-        Random rand = new Random();
-        int list = rand.nextInt(options.size());
-        options.get(list).click();
-    }
-
-    public void selectAddedContactFromDropdown() {
-        List<WebElement> options = driver.findElements(By.xpath("//select[@id='inputContactId']"));
-        Random rand = new Random();
-        int list = rand.nextInt(options.size());
-        options.get(list).click();
+    public void selectAddedContactFromDropdown(String firstName, String lastName, String emailAddress) {
+        Select dropdownContacts = new Select(contactsDropdown);
+        dropdownContacts.selectByVisibleText(firstName + " " + lastName + " - " + emailAddress);
     }
 
     private void clearAndType(WebElement element, String text) {
@@ -126,25 +143,20 @@ public class ContactsPage extends LoadableComponent<ContactsPage> {
         element.sendKeys(text);
     }
 
-//    public void deletedContactIsNotPresent(){
-//        WebElement select = driver.findElement(By.id("inputContactId"));
-//        WebElement option = select.getFirstSelectedOption();
-//        String selectedValueInDropDown = option.getText();
-//        Boolean found = false;
-//
-//        WebElement element = driver.findElement(By.id("..."));
-//        Select select = new Select(element);
-//        List<WebElement> allOptions = select.getOptions();
-//        for(int i=0; i<allOptions.size(); i++) {
-//            if(alloptions[i].Equals("your_option_text")) {
-//                found=true;
-//                break;
-//            }
-//        }
-//        if(found) {
-//            System.out.println("Value exists");
-//        }
-//    }
+    public void checkIfContactIsPresentAfterDeleting() {
+        Select chooseContactDropdown = new Select(contactsDropdown);
+        List<WebElement> allOptions = chooseContactDropdown.getOptions();
+        boolean found = false;
+
+        for (WebElement webElement : allOptions) {
+            String defaultMember = "Add New Contact";
+            if (defaultMember.equalsIgnoreCase(webElement.getAttribute("value"))) {
+                chooseContactDropdown.selectByValue(defaultMember);
+                found = true;
+                break;
+            }
+        }
+    }
 
     public boolean isDisplayedCorrectly() {
         return goButton.isDisplayed() && firstNameField.isDisplayed() && lastNameField.isDisplayed();

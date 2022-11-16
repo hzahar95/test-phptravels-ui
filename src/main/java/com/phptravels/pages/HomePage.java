@@ -34,17 +34,6 @@ public class HomePage extends LoadableComponent<HomePage> {
         pageActions = new PageActions(driver);
     }
 
-//    public ProfilePage goToYourProfilePage(){
-//        helloAccountLink.click();
-//        selectYourProfileFromDropdown();
-//        return new ProfilePage(driver);
-//    }
-//
-//    public void selectYourProfileFromDropdown() {
-//        Select yourProfileDropdown = new Select(driver.findElement(By.id("Secondary_Navbar-Account")));
-//        yourProfileDropdown.selectByVisibleText("Your Profile ");
-//    }
-
     public boolean isCorrectlyDisplayed() {
         boolean isUpdateInfoDisplayed = updateButton.isDisplayed();
         boolean isHomeLinkDisplayed = homeLink.isDisplayed();

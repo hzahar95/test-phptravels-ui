@@ -8,7 +8,7 @@ public final class ConfigurationManager {
         return ConfigCache.getOrCreate(BrowserConfig.class);
     }
 
-    public static CredentialsConfig getCredentialsConfigInstance(){
+    public static CredentialsConfig getCredentialsConfigInstance() {
         return ConfigCache.getOrCreate(CredentialsConfig.class);
     }
 }
