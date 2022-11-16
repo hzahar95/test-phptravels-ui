@@ -8,47 +8,48 @@ public final class FakerUtils {
 
     private static final Faker FAKER = new Faker();
     private static final String PHONE_NUMBER_REGEX = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$";
+
     public static String generateValidEmail() {
         return "mymail" + System.nanoTime() + "@outlook.com";
     }
 
-    public static String generateRandomFirstName(){
+    public static String generateRandomFirstName() {
         return FAKER.name().firstName();
     }
 
-    public static String generateRandomLastName(){
+    public static String generateRandomLastName() {
         return FAKER.name().lastName();
     }
 
-    public static String generateRandomPhoneNumber(){
+    public static String generateRandomPhoneNumber() {
         return FAKER.phoneNumber().cellPhone();
     }
 
-    public static String generateRandomCompanyName(){
+    public static String generateRandomCompanyName() {
         return FAKER.company().name();
     }
 
-    public static String generateRandomStreet(){
+    public static String generateRandomStreet() {
         return FAKER.address().streetAddress();
     }
 
-    public static String generateRandomAlternativeStreet(){
+    public static String generateRandomAlternativeStreet() {
         return FAKER.address().streetAddress();
     }
 
-    public static String generateRandomCity(){
+    public static String generateRandomCity() {
         return FAKER.address().cityName();
     }
 
-    public static String generateRandomState(){
+    public static String generateRandomState() {
         return FAKER.address().state();
     }
 
-    public static String generateRandomPostcode(){
+    public static String generateRandomPostcode() {
         return FAKER.address().zipCode();
     }
 
-    public static String generateRandomMobile(){
+    public static String generateRandomMobile() {
         return FAKER.expression("#{regexify '" + PHONE_NUMBER_REGEX + "'}");
     }
 
@@ -66,8 +67,5 @@ public final class FakerUtils {
                 password.chars().anyMatch(Character::isLowerCase) &&
                 password.chars().anyMatch(Character::isUpperCase);
     }
-
-
-
 
 }

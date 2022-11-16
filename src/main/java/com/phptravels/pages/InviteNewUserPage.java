@@ -2,6 +2,7 @@ package com.phptravels.pages;
 
 import com.phptravels.config.ConfigurationManager;
 import com.phptravels.utils.FakerUtils;
+import com.phptravels.utils.RandomWebElementUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,10 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 import static org.testng.Assert.assertTrue;
 
@@ -31,7 +29,7 @@ public class InviteNewUserPage extends LoadableComponent<InviteNewUserPage> {
     private WebElement choosePermissionsRadioButton;
 
     @FindBy(xpath = "(//div[@id='invitePermissions'])[1]//label//input[@type='checkbox']")
-    private List<WebElement> checkboxes;
+    private List<WebElement> permissionCheckboxes;
 
     public InviteNewUserPage(WebDriver driver) {
         this.driver = driver;
@@ -43,31 +41,16 @@ public class InviteNewUserPage extends LoadableComponent<InviteNewUserPage> {
         pageActions.clearAndType(inviteEmailField, FakerUtils.generateValidEmail());
         choosePermissionsRadioButton.click();
         pageActions.scrollElementIntoView(sendInviteButton);
-        selectRandomPermissionCheckbox(3);
-        //selectAllPermissionCheckboxes();
+        RandomWebElementUtils.selectCertainNumberOfRandomWebElements(3, permissionCheckboxes);
         pageActions.scrollElementIntoView(sendInviteButton);
         sendInviteButton.click();
     }
 
-    private void selectRandomPermissionCheckbox(int numberOfCheckboxes) {
-        Set<Integer> randomCheckboxIndexes = new HashSet<>(numberOfCheckboxes);
-        while (randomCheckboxIndexes.size() < numberOfCheckboxes) {
-            int index = new Random().nextInt(checkboxes.size());
-            if (!randomCheckboxIndexes.contains(index)) {
-                randomCheckboxIndexes.add(index);
-            }
-        }
-
-        for (Integer randomCheckboxIndex : randomCheckboxIndexes) {
-            checkboxes.get(randomCheckboxIndex).click();
-        }
-    }
-
     private void selectAllPermissionCheckboxes() {
         pageActions.scrollElementIntoView(sendInviteButton);
-        System.out.println("Number of Check boxes : " + (checkboxes.size()));
+        System.out.println("Number of Check boxes : " + (permissionCheckboxes.size()));
 
-        for (WebElement cb : checkboxes) {
+        for (WebElement cb : permissionCheckboxes) {
             cb.click();
         }
         System.out.println("All check boxes have been checked");

@@ -7,13 +7,13 @@ public class ApiClient extends BaseClient {
         super(targetDomain);
     }
 
-    public void register(RegistrationRequest registrationRequest){
+    public void register(RegistrationRequest registrationRequest) {
         Response response = requestMaker()
                 .body(registrationRequest)
                 .post("/api/login/signup");
     }
 
-    public void login(LoginRequest loginRequest){
+    public void login(LoginRequest loginRequest) {
         Response response = requestMaker()
                 .body(loginRequest)
                 .post("/api/login/check");

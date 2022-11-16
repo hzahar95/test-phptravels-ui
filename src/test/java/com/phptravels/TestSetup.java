@@ -57,9 +57,7 @@ public class TestSetup {
 
     @AfterTest
     public void destroyWebDriver() {
-        if (driver != null) {
-            driver.quit();
-        }
+        driver.quit();
     }
 
 }
